@@ -1,0 +1,145 @@
+openapi: 3.0.1
+info:
+  title: API Livraria
+  description: Essa é um API 'simples', com os métodos GET/POST/Delete e PUT. Utilizando Spring Boot, Java8 e BD em memória H2.
+  version: 0.0.1
+  contact:
+    name: Ewerton Vieira Donati
+    email: teste@teste.com.br
+    url: http://www.teste.com.br
+  license:
+    name: "Licença: GPLv3"
+    url: https://www.gnu.org/licenses/gpl-3.0.html
+servers: 
+- url: http://localhost:8080/
+  description: API Livraria
+paths:
+  /livros:
+    get:
+      summary: Lista todos os Livros cadastados
+      description: "Através desse endpoint você pode listar os livros cadastrados"
+      responses: 
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              schema: 
+                type: array
+                items:
+                  type: object
+                  properties: 
+                    id:
+                      type: integer
+                    titulo:
+                      type: string
+                    conteudo:
+                      type: string
+                    nomeAutor:
+                      type: string
+                    numeroPaginas:
+                      type: integer
+                      
+    post:
+      summary: Cadastra um novo Livro
+      description: "Através desse endpoint você pode cadastrar um novo livro."
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: 
+                titulo:
+                  type: string
+                conteudo:
+                  type: string
+                nomeAutor:
+                  type: string
+                numeroPaginas:
+                  type: integer
+      responses:
+        201:
+          description: "Sucesso"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  titulo:
+                    type: string
+                  conteudo:
+                    type: string
+                  nomeAutor:
+                    type: string
+                  numeroPaginas:
+                    type: integer
+                    
+  /livros/{id}:
+    parameters: 
+      - name: id
+        in: path
+        schema:
+           type: integer
+        required: true
+    get:
+      summary: Lista um determinado Livro, pelo ID
+      description: "Através desse endpoint você pode vizualiar as informações de um determinado livro."
+      responses: 
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties: 
+                    id:
+                      type: integer
+                    titulo:
+                      type: string
+                    conteudo:
+                      type: string
+                    nomeAutor:
+                      type: string
+                    numeroPaginas:
+                      type: integer
+        404: 
+          description: "Livro não encontrado"
+          content:
+            application/json:
+              example: "Not Found"
+              
+    put:
+      summary: Atualiza um determinado livro, pelo ID
+      description: "Através desse endpoint você pode atualizar as informações de um determinado livro."
+      responses: 
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties: 
+                    titulo:
+                      type: string
+                    conteudo:
+                      type: string
+                    nomeAutor:
+                      type: string
+                    numeroPaginas:
+                      type: integer
+        404: 
+          description: "Livro não encontrado"
+          content:
+            application/json:
+              example: "Not Found"
+              
+    delete:
+      summary: Remove um determinado livro, pelo ID
+      description: "Através desse endpoint você pode remover um determinado livro."
+      responses: 
+        200:
+          description: Sucesso
+        404: 
+          description: "Livro não encontrado"
+          content:
+            application/json:
+              example: "Not Found"
